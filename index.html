@@ -1103,7 +1103,8 @@
   ];
   const DEPLOY_TARGETS = [
     { id: "agent", icon: "🤖", label: "Build your agent", desc: "Paste your Agent Core into Copilot Agent Builder, or any chief-of-staff style agent, to create a named agent grounded in your M365.",
-      how: "copilot.microsoft.com → Agents → New agent → paste your Agent Core → name it → Create. The same Agent Core works in any chief-of-staff style agent. Everyone walks away with this." },
+      how: "Open Agent Builder (button below) → paste your Agent Core into the instructions → name it → Create. The same Agent Core works in any chief-of-staff style agent. Everyone walks away with this.",
+      link: "https://m365.cloud.microsoft/chat/agent/new?auth=2", linkLabel: "🚀 Open Copilot Agent Builder" },
     { id: "scout", icon: "🧭", label: "Go further with Scout", desc: "Want a deeper, always-on experience? Load your Blueprint into Microsoft Scout. (Optional, advanced.)",
       how: "Open a Scout chat, paste your Agent Core + memory pack, and say \u201cremember this and use it going forward.\u201d" },
   ];
@@ -2168,6 +2169,16 @@
     panel.appendChild(grid);
     if (state.fa.deployTarget) { const t = DEPLOY_TARGETS.find((x) => x.id === state.fa.deployTarget); how.innerHTML = "<b>How:</b> " + esc(t.how); }
     panel.appendChild(how);
+
+    // Direct launch link for the chosen target (so nobody has to hunt for Agent Builder).
+    if (state.fa.deployTarget) {
+      const t = DEPLOY_TARGETS.find((x) => x.id === state.fa.deployTarget);
+      if (t && t.link) {
+        const launch = el("button", "btn primary", t.linkLabel || "Open"); launch.style.cssText = "margin-top:10px;padding:8px 16px;font-size:13px;";
+        launch.addEventListener("click", () => { window.open(t.link, "_blank", "noopener"); trackEvent("launch_target", { target: t.id }); });
+        panel.appendChild(launch);
+      }
+    }
 
     // What carried over from Soul Code (so it's visible what the agent inherited).
     const carry = soulCodeCarryover();
