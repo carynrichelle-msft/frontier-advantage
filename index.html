@@ -475,7 +475,7 @@
             <button class="tab" data-tab="prompt">🤖 Polish it</button>
           </div>
           <div id="tab-mem">
-            <div class="callout"><b>🧠 Load it into your agent, this is the point.</b> Your Soul Code is only powerful when an AI actually uses it. Copy the pack below, paste it into an agent with a memory feature (such as Microsoft Scout or Copilot), and say <i>&ldquo;remember these about me.&rdquo;</i> It saves each as a durable memory, so it knows you in every future session, not just today. What's in it for you: an agent that stops asking the same questions and starts sounding like you, the first step toward Scout, Frontier Advantage, and your own automations. <span id="memNote" style="display:block;margin-top:6px;color:var(--cp-text-muted);"></span></div>
+            <div class="callout"><b>🧠 Load it into your agent, this is the point.</b> Your Soul Code is only powerful when an AI actually uses it. Copy the pack below, paste it into an agent with durable memory (such as Microsoft Scout, Cowork, or Copilot Chief of Staff), and say <i>&ldquo;remember these about me.&rdquo;</i> It saves each as a durable memory, so it knows you in every future session, not just today. What's in it for you: an agent that stops asking the same questions and starts sounding like you, the first step toward Scout, Frontier Advantage, and your own automations. <span id="memNote" style="display:block;margin-top:6px;color:var(--cp-text-muted);"></span></div>
             <div class="row actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><button class="btn primary" id="copyMemBtn">Copy memory pack</button></div>
             <div class="output" id="memOut"></div>
           </div>
@@ -1105,8 +1105,8 @@
     { id: "agent", icon: "🤖", label: "Build your agent", desc: "Paste your Agent Core into Copilot Agent Builder, or any chief-of-staff style agent, to create a named agent grounded in your M365.",
       how: "Open Agent Builder (button below) → paste your Agent Core into the instructions → name it → Create. The same Agent Core works in any chief-of-staff style agent. Everyone walks away with this.",
       link: "https://m365.cloud.microsoft/chat/agent/new?auth=2", linkLabel: "🚀 Open Copilot Agent Builder" },
-    { id: "scout", icon: "🧭", label: "Go further with Scout", desc: "Want a deeper, always-on experience? Load your Blueprint into Microsoft Scout. (Optional, advanced.)",
-      how: "Open a Scout chat, paste your Agent Core + memory pack, and say \u201cremember this and use it going forward.\u201d" },
+    { id: "scout", icon: "🧭", label: "Load it into a memory agent", desc: "Drop your unified profile into an agent with durable memory, Microsoft Scout, Cowork, or Copilot Chief of Staff, so it remembers you in every future session. Scout gives the deepest, always-on experience.",
+      how: "Open Scout, Cowork, or Copilot Chief of Staff, paste your unified profile, and say \u201cremember this about me and use it going forward.\u201d Each saves it as durable memory it reuses in every future session." },
   ];
 
   // FA persistence helpers.
@@ -2195,8 +2195,8 @@
     const h1 = el("div"); h1.style.cssText = "display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;";
     const lab1 = el("span", null, isScout ? "🧭 Your unified profile (Soul Code + Blueprint)" : "🤖 Your Agent Core"); lab1.style.cssText = "font-weight:700;font-size:14px;"; h1.appendChild(lab1);
     const out = isScout ? buildScoutPack() : buildAgentCore();
-    const cb1 = el("button", "btn primary", isScout ? "Copy for Scout" : "Copy Agent Core"); cb1.style.cssText = "padding:7px 14px;font-size:13px;";
-    cb1.addEventListener("click", () => copyText(out, isScout ? "Scout pack" : "Agent Core"));
+    const cb1 = el("button", "btn primary", isScout ? "Copy my profile" : "Copy Agent Core"); cb1.style.cssText = "padding:7px 14px;font-size:13px;";
+    cb1.addEventListener("click", () => copyText(out, isScout ? "Memory profile" : "Agent Core"));
     h1.appendChild(cb1);
     if (!isScout) {
       const cnt = el("span", null, out.length + " / " + AGENT_CORE_LIMIT + " chars");
@@ -2206,7 +2206,7 @@
     c1.appendChild(h1);
     const note1 = el("div"); note1.style.cssText = "font-size:12px;color:var(--cp-text-muted);margin-bottom:6px;";
     note1.textContent = isScout
-      ? "Everything in one place: your full Soul Code (who you are, how you work, your boundaries and goals) plus your Blueprint rhythm. Paste it into Scout so it knows you fast. Your private vault is never included."
+      ? "Everything in one place: your full Soul Code (who you are, how you work, your boundaries and goals) plus your Blueprint rhythm. Paste it into Scout, Cowork, or Copilot Chief of Staff and say \u201cremember this about me,\u201d it saves as durable memory so the agent knows you in every future session. Your private vault is never included."
       : "Fits the Copilot Agent Builder 8K limit. Your selected prompts are embedded, and it grounds to your M365.";
     c1.appendChild(note1);
     c1.appendChild(el("div", "output", esc(out)));
@@ -2579,7 +2579,7 @@
       + helpItem("Soul Code vs. Blueprint, what's the difference?", "Your <b>Soul Code</b> is the timeless part: who you are, how you like to work, your boundaries and goals. It works with any AI. Your <b>Blueprint</b> adds the moving part: the daily/weekly/monthly workflows that become your rhythm.")
       + helpItem("Where does my data go?", "Nowhere. Everything stays in this browser's local storage. There's no server and nothing is sent anywhere. Clearing your browser data or hitting Reset wipes it.")
       + helpItem("What's the 8K Agent Core?", "Copilot Agent Builder caps custom instructions at 8,000 characters. Your Agent Core is a tight, prescriptive version of your profile with your selected prompts embedded, built to fit that limit and ground to your Microsoft 365.")
-      + helpItem("Scout vs. Agent Builder, which do I pick?", "Everyone can paste the Agent Core into <b>Copilot Agent Builder</b> (or any chief-of-staff agent). If you want a deeper, always-on experience, take the same profile to <b>Microsoft Scout</b>. Optional and more advanced.")
+      + helpItem("Where do I deploy it, and what has durable memory?", "Two paths. <b>Copilot Agent Builder</b> turns your 8K Agent Core into a named agent. Or load your unified profile into a <b>durable-memory agent</b>, Microsoft Scout, Cowork, or Copilot Chief of Staff, and say \u201cremember this about me.\u201d It then knows you in every future session. Scout gives the deepest, always-on experience.")
       + helpItem("What's Prompt Coach?", "A first-party Copilot agent that sharpens a prompt for you. On any workflow, hit \u201cSharpen with Prompt Coach,\u201d answer a question or two, then paste the improved prompt back, it gets a \u2728 Coached badge.")
       + helpItem("What's the Prompt Library?", "A place to browse ready-made prompts. We point you at the best one for your role, yours is the <b>" + esc(lib.label) + "</b>. " + esc(lib.note))
       + helpItem("How do the calendar holds work?", "On <b>Make it stick</b>, download a recurring calendar event (.ics) per cadence, or your whole rhythm at once. The prompts travel inside the invite, and every hold links back to this app so you can add more later.")
